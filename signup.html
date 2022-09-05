@@ -10,9 +10,6 @@
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
   <link rel="stylesheet" href="styles/acesso.css">
 
-  <!-- ---------------------- lógica aplicada no registro -------------------- -->
-  <script src="/scripts/utils.js"></script>
-  <script src="/scripts/signup.js"></script>
 
 </head>
 
@@ -21,40 +18,55 @@
   <div class="left">
     <img src="./assets/pessoa-signup.png" alt="">
   </div>
+
   <div class="right">
-    <form>
+    <form id="form">
       <div class="form-header">
         <p>To-Do App</p>
       </div>
 
-      <label>
-        Nome:
-        <input type="text">
-      </label>
-      <label>
-        Sobrenome:
-        <input type="text">
-      </label>
-      <label>
-        Email:
-        <input type="email">
-      </label>
-      <label>
-        Senha:
-        <input type="password">
-      </label>
-      <label>
-        Repetir senha:
-        <input type="password">
-      </label>
+      <div class="form-control" >
+        <label >Nome:</label>
+        <input type="text" id="username">
+        <small>Error Message</small>
+      </div>
 
-      <button>Criar conta</button>
+      <div class="form-control">
+        <label>Sobrenome:</label>
+        <input type="text" id="lastname">
+         
+        <small>Error Message</small>
+      </div>
+
+      <div class="form-control">
+      <label>Email:</label> 
+      <input type="email" id="email">  
+      <small>Error Message</small>
+      </div>
+
+      <div class="form-control">
+        <label>Senha:</label> 
+        <input type="password" id="password">
+        <small>Error Message</small>
+      </div>
+
+      <div class="form-control">
+        <label>Repetir senha:</label>
+        <input type="password" id="password-two">
+        <small>Error Message</small>
+      </div>
+
+      <button type="submit">Criar conta</button>
 
     </form>
+
     <div class="ingressar">
       <a href="index.html">Já possui conta? Acesse aqui</a>
     </div>
+
   </div>
+
+  <script src="./scripts/signup/validacao.js"></script>
 
 </body>
 
