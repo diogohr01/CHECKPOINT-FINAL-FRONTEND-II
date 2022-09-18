@@ -1,90 +1,67 @@
-window.onload = function () { 
+window.onload = function () {  
+    let botao = document.getElementById("criar");
 
-    const botaoCadastro = document.getElementById('criarUsuario');
-    botaoCadastro.addEventListener('click', salvarCliente); //configurando para quando houver click no botão acionar função salvarCliente
-    
-    function salvarCliente(){ // Função que irá receber os dados digitados e selva no localStorage
-
-
-        const cliente = { //salvando dados digitados e retirando espaço do inicio e final
-            nome: document.getElementById('nome').value.trim(),
-            sobrenome: document.getElementById('sobrenome').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            senha: document.getElementById('senha').value.trim(),
-            confirmaSenha: document.getElementById('confirmaSenha').value.trim(),
-        }
-        
-        if(cliente.nome != "" && cliente.sobrenome != "" && cliente.email != "" && cliente.senha != "" && cliente.confirmaSenha){ //testando se os campos estão preenchidos
-
-            if(localStorage.getItem(cliente.email)){ //testando se o email digitado já etsá cadastrado
-
-                Swal.fire({ // Usando a biblioteca sweetalert2
-                    icon: 'error',
-                    title: 'E-mail já está cadastrado',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });           
-            }
-            else{
-                
-                if(cliente.senha != cliente.confirmaSenha){ //testando se a senha e a confirmação da senha estão iguais
-                    Swal.fire({ // Usando a biblioteca sweetalert2
-                        icon: 'error',
-                        title: 'As senhas não conferem',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                }
-                
-                else{
-                    localStorage.setItem(cliente.email,JSON.stringify(cliente)); //salvando no localStorage os dados do usuário                
-                    Swal.fire({ // Usando a biblioteca sweetalert2
-                        icon: 'success',
-                        title: 'Cadastro realizado com sucesso',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                    .then((result) => { //Redirecinando para tela inicial apois apresentar o alerta
-                        if(result.dismiss=== Swal.DismissReason.timer){
-                            window.document.location.href = "./index.html";
-                        }
-                      });
-                }
-            }
-         }
+    botao.addEventListener("click",function(event){
         event.preventDefault();
+        cadastrar();
+    });
+ 
+    function cadastrar() {
+
+        //Salvando dados digitados pelo usuário
+        let nomeDigitado = document.getElementById("nome").value;
+        let sobrenomeDigitado = document.getElementById("sobrenome").value;
+        let emailDigitado = document.getElementById("email").value;
+        let senhaDigitada = document.getElementById("senha").value;
+        let confimaSenhadigitada = document.getElementById("confirmaSenha").value;
+
+        //Salvando informações digitadas em um obejeto literal
+        let dados = {
+            firstName: nomeDigitado,
+            lastName: sobrenomeDigitado,
+            email: emailDigitado,
+            password: senhaDigitada
+        };
+
+
+        //Trasnformando convertando de javascript para uma String JSON 
+        dados = JSON.stringify(dados);
+
+        //Criando um obejeto com informações do cabeçario da API
+        let request = {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: dados
+    
+        }
+
+        //Enviando dados para a API
+        fetch('https://ctd-todo-api.herokuapp.com/v1/users', request)
+        .then(function (resultado) {
+            if (resultado.status == 200 || resultado.status == 201) {
+                sweetalert2('success','Cadastro realizado com sucesso',"./index.html");
+                return resultado.json();
+            } else {
+                if (resultado.status == 400) {
+                    sweetalert2('error','Cadastro já existe',"./signup.html");
+                return resultado.json();tarefas
+                }
+                throw resultado;
+            }
+        })
+
+        .then(function(data) {
+            //manipulamos a resposta        
+            console.log(data);
+            console.log("Passou por aqui");
+            
+        })
+
+        .catch(function(error) {
+            console.log(error)
+        });
+        
     }
-
-    //Alertando usuário que falta preencher o campo
-
-         //Avisa que falta preeencher nome
-         document.getElementById("nome").addEventListener('focusout', function (){
-            if(document.getElementById("nome").value === ''){document.getElementById("avisoNome").innerHTML =`Preencha este campo`}
-            else{document.getElementById("avisoNome").innerHTML =``}
-         });
-    
-         //Avisa que falta preeencher sobrenome
-         document.getElementById("sobrenome").addEventListener('blur', function (){
-            if(document.getElementById("sobrenome").value === ''){document.getElementById("avisoSobrenome").innerHTML =`Preencha este campo`}
-            else{document.getElementById("avisoSobrenome").innerHTML =``}
-         });
-    
-         //Avisa que falta preeencher email
-         document.getElementById("email").addEventListener('blur', function (){
-            if(document.getElementById("email").value === ''){document.getElementById("avisoEmail").innerHTML =`Preencha este campo`}
-            else{document.getElementById("avisoEmail").innerHTML =``}
-         });
-    
-         //Avisa que falta preeencher senha
-        document.getElementById("senha").addEventListener('blur', function (){
-        if(document.getElementById("senha").value === ''){document.getElementById("avisoSenha").innerHTML =`Preencha este campo`}
-        else{document.getElementById("avisoSenha").innerHTML =``}
-        });
-         
-    
-         //Avisa que falta preeencher confirmação da senha
-        document.getElementById("confirmaSenha").addEventListener('blur', function (){
-            if(document.getElementById("confirmaSenha").value === ''){document.getElementById("avisoConfirmaSenha").innerHTML =`Preencha este campo`}
-            else{document.getElementById("avisoConfirmaSenha").innerHTML =``}
-        });
 }

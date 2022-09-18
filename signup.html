@@ -7,14 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do App</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
   <link rel="stylesheet" href="styles/acesso.css">
 
   <!-- ---------------------- lógica aplicada no registro -------------------- -->
-  <script src="scripts/utils.js"></script>
-  <script src="scripts/signup.js"></script> 
+  <!-- <script src="/scripts/utils.js"></script> -->
+  <script src="./scripts/signup.js"></script>
+  <script src="./scripts/utils.js"></script>
+
+   <!-- ----------------------------- sweet alert ----------------------------- -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -31,35 +33,30 @@
 
       <label>
         Nome:
-        <input type="text" id="nome">
-        <small id="avisoNome"></small>
+        <input id="nome" type="text">
       </label>
       <label>
         Sobrenome:
-        <input type="text" id="sobrenome">
-        <small id="avisoSobrenome"></small>
+        <input id="sobrenome" type="text">
       </label>
       <label>
         Email:
-        <input type="email" id="email">
-        <small id="avisoEmail"></small>
+        <input id="email" type="email">
       </label>
       <label>
         Senha:
-        <input type="password" id="senha">
-        <small id="avisoSenha"></small>
+        <input id="senha" type="password">
       </label>
       <label>
         Repetir senha:
-        <input type="password" id="confirmaSenha">
-        <small id="avisoConfirmaSenha"></small>
+        <input id="confirmaSenha" type="password">
       </label>
 
-      <button type="submit" id="criarUsuario">Criar conta</button>
+      <button id="criar">Criar conta</button>
 
     </form>
     <div class="ingressar">
-      <a href="index.html">Já possui conta? Acesse aqui</a>
+      <a  href="index.html">Já possui conta? Acesse aqui</a>
     </div>
   </div>
 
