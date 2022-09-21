@@ -1,50 +1,90 @@
-window.onload = function () { 
+//Função para usar Alertas do sweetalert2
+function sweetalert2(icon, title, link) {
+    Swal.fire({ // Usando a biblioteca sweetalert2
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1500
+    })
+        .then((result) => { //Redirecinando para tela inicial apois apresentar o alerta
+            if (result.dismiss === Swal.DismissReason.timer) {
+                window.document.location.href = link;
+            }
+        });
+}
 
-    const emailDigitado = document.getElementById('inputEmail'); //Salvando email digitado
-    const senhaDigitada = document.getElementById('inputPassword'); //Salvando senha digitada
-    const botao = document.getElementById('login'); 
-    botao.addEventListener('click', verificandoCadastro); //Capturando clique no botão e direcionando para a função
-    
+//função para limpar uma variavel
+function limparCampo(campo) {
+    campo.value = "";
+}
 
-    function verificandoCadastro(){
-        
-        let dadoLocais = JSON.parse(localStorage.getItem(emailDigitado.value)); //Salvando dados do localStorage na variavel
+function excluirTarefa(id) {
 
-        if(emailDigitado.value != "" && senhaDigitada.value != ""){  //testando se os campos de login estão preenchidos
+    let request = {
+        method: "DELETE",
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: JSON.parse(sessionStorage.getItem("jwt"))
+        }
+    }
 
-            if(localStorage.getItem(emailDigitado.value)){ //testando se existe cadatsro com esse e-mail
+    fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, request)
+        .then(function (resultado) {
+            if (resultado.status == 200 || resultado.status == 201) {
+                sweetalert2('success', 'Excluído com sucesso', "./tarefas.html")
+                return resultado.json();
 
-                if(dadoLocais.email == emailDigitado.value && dadoLocais.senha == senhaDigitada.value){ //Testando se email e senha estão corretos
+            } else {
 
-                    JSON.stringify(localStorage.setItem("logado",dadoLocais.email)); //colocando o 
-                    window.location.href = "./tarefas.html"; //redirecionando usuário para pagina de tarefas,depois de acrtar usuário e senha
+                //sweetalert2('error','Usuário e/ou senha inválidos',"./index.html")
+                throw resultado;
+            }
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+    event.preventDefault();
+}
 
-                }
-                else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Email ou Senha Inválido',
-                        showConfirmButton: false,
-                        timer: 1500,
-                      });
-                }
+
+function marcarConcluida(id, completa) {
+
+    let dadosTarefaConcluida = {
+        completed: completa
+    };
+
+    dadosTarefaConcluida = JSON.stringify(dadosTarefaConcluida);
+
+    let request = {
+        method: "PUT",
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: JSON.parse(sessionStorage.getItem("jwt"))
+        },
+        body: dadosTarefaConcluida
+    }
+
+    fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, request)
+        .then(function (resultado) {
+            if (resultado.status == 200 || resultado.status == 201) {
+                return resultado.json();
+            } else {
+                sweetalert2('error', 'Usuário e/ou senha inválidos', "./tarefas.html")
+                throw resultado;
+            }
+        })
+        .then(function (data) {
+            if(data.completed === true){
+                sweetalert2('success', 'Tarefa arquivada', "./tarefas.html")
             }
             else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'E-mail não cadastrado',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  })
-                  .then((result) => {
-                    if(result.dismiss=== Swal.DismissReason.timer){
-                        window.document.location.href = "./signup.html";
-                    }
-                  });
+            sweetalert2('success', 'Tarefa desarquivada', "./tarefas.html")
             }
+            //manipulamos a resposta
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
 
-        }
-        event.preventDefault();
-    
-    }
+    event.preventDefault();
 }
