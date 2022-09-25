@@ -1,5 +1,6 @@
 //os recursos são acionados no final do carregamento da pag 
 window.onload = function () {
+  renderizarSkeletons(5, ".tarefas-pendentes");
   //testando se o usuário esta logado
   let semPermissao = this.sessionStorage.getItem("jwt");
   if (!semPermissao) {
@@ -30,7 +31,7 @@ window.onload = function () {
         Authorization: JSON.parse(this.sessionStorage.getItem("jwt"))
       }
     }
-    fetch('https://ctd-todo-api.herokuapp.com/v1/users/getMe', request)
+    fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/users/getMe', request)
       .then(function (resultado) {
         if (resultado.status == 200 || resultado.status == 201) {
           return resultado.json();
@@ -59,8 +60,9 @@ window.onload = function () {
         Authorization: JSON.parse(this.sessionStorage.getItem("jwt"))//pegando Token da local session
       },
     }
-    fetch('https://ctd-todo-api.herokuapp.com/v1/tasks/', request)
+    fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/', request)
       .then(function (resultado) {
+        removerSkeleton(".tarefas-pendentes");
         if (resultado.status == 200 || resultado.status == 201) {
           return resultado.json();
         }
@@ -73,6 +75,7 @@ window.onload = function () {
         }
       })
       .then(function (data) {
+        removerSkeleton(".tarefas-pendentes");
         //manipulamos a resposta 
         data.forEach((tarefas) => {
           const criaLi = document.createElement("li");
@@ -132,7 +135,7 @@ window.onload = function () {
         },
         body: dadosTarefa
       }
-      fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/`, request)
+      fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/`, request)
         .then(function (resultado) {
           if (resultado.status == 200 || resultado.status == 201) {
             return resultado.json();

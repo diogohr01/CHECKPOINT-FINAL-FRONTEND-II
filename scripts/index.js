@@ -1,6 +1,6 @@
 window.onload = function () {
-    let botao = document.getElementById("botaoAcessar");
 
+    let botao = document.getElementById("botaoAcessar");
     botao.addEventListener("click", function (event) {
         let emailDigitado = document.getElementById("inputEmail").value.trim();
         let senhaDigitada = document.getElementById("inputPassword").value.trim();
@@ -9,6 +9,7 @@ window.onload = function () {
             password: senhaDigitada
         };
         if (emailDigitado != "" && senhaDigitada != "") {
+            mostrarSpinner();
             console.log(dados);
             dados = JSON.stringify(dados);
             let request = {
@@ -18,8 +19,9 @@ window.onload = function () {
                 },
                 body: dados
             }
-            fetch('https://ctd-todo-api.herokuapp.com/v1/users/login/', request)
+            fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login', request)
                 .then(function (resultado) {
+                    ocultarSpinner();
                     if (resultado.status == 200 || resultado.status == 201) {
                         sweetalert2('success', 'Login realizado com sucesso', "./tarefas.html");
                         return resultado.json();
@@ -34,6 +36,8 @@ window.onload = function () {
                     console.log(data)
                 })
                 .catch(function (error) {
+                    sweetalert2('error', 'Erro ao conectar ao Servidor', "./index.html");
+                    ocultarSpinner();
                     console.log(error)
                 });
         }

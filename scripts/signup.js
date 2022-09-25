@@ -34,12 +34,14 @@ window.onload = function () {
             body: dados
         }
         if (nomeDigitado != "" && sobrenomeDigitado != "" && emailDigitado != "" && senhaDigitada != "" && confimaSenhadigitada != "") {
+            mostrarSpinner();
             if (senhaDigitada != confimaSenhadigitada) {
                 sweetalert2('error', 'Senhas não conferem', "./signup.html")
             }
             else {//Enviando dados para a API
-                fetch('https://ctd-todo-api.herokuapp.com/v1/users', request)
+                fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/users', request)
                     .then(function (resultado) {
+                        ocultarSpinner();
                         if (resultado.status == 200 || resultado.status == 201) {
                             sweetalert2('success', 'Cadastro realizado com sucesso', "./index.html");
                             return resultado.json();
@@ -53,6 +55,7 @@ window.onload = function () {
                         }
                     })
                     .catch(function (error) {
+                        ocultarSpinner();
                         sweetalert2('error', 'Erro ao conectar ao Servidor', "./signup.html");
                         console.log(error)
                     });

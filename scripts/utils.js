@@ -28,7 +28,7 @@ function excluirTarefa(id) {
         }
     }
 
-    fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, request)
+    fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/${id}`, request)
         .then(function (resultado) {
             if (resultado.status == 200 || resultado.status == 201) {
                 sweetalert2('success', 'Excluído com sucesso', "./tarefas.html")
@@ -64,7 +64,7 @@ function marcarConcluida(id, completa) {
         body: dadosTarefaConcluida
     }
 
-    fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, request)
+    fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/${id}`, request)
         .then(function (resultado) {
             if (resultado.status == 200 || resultado.status == 201) {
                 return resultado.json();
