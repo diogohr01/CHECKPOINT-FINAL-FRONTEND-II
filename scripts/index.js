@@ -1,9 +1,9 @@
 window.onload = function () {
     let botao = document.getElementById("botaoAcessar");
-    
+
 
     botao.addEventListener("click", function (event) {
-        
+
         let emailDigitado = document.getElementById("inputEmail").value.trim();
         let senhaDigitada = document.getElementById("inputPassword").value.trim();
         let dados = {
@@ -27,10 +27,13 @@ window.onload = function () {
                     if (resultado.status == 200 || resultado.status == 201) {
                         sweetalert2('success', 'Login realizado com sucesso', "./tarefas.html");
                         return resultado.json();
-                    } else {
-                        sweetalert2('error', 'Usuário e/ou senha inválidos', "./index.html")
-                        throw resultado;
                     }
+                    else{
+                        if (resultado.status == 400){
+                            sweetalert2('error', 'Usuário e/ou senha inválidos', "./index.html")
+                        }
+                    }
+                    throw resultado;
                 })
                 .then(function (data) {
                     //manipulamos a resposta
@@ -38,8 +41,10 @@ window.onload = function () {
                     console.log(data)
                 })
                 .catch(function (error) {
-                    sweetalert2('error', 'Erro ao conectar ao Servidor', "./index.html");
                     ocultarSpinner();
+                    
+                    sweetalert2('error', 'Erro ao conectar ao Servidor', "./index.html");
+                    
                     console.log(error)
                 });
         }
