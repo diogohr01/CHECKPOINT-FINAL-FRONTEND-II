@@ -1,7 +1,9 @@
 window.onload = function () {
-
     let botao = document.getElementById("botaoAcessar");
+    
+
     botao.addEventListener("click", function (event) {
+        
         let emailDigitado = document.getElementById("inputEmail").value.trim();
         let senhaDigitada = document.getElementById("inputPassword").value.trim();
         let dados = {

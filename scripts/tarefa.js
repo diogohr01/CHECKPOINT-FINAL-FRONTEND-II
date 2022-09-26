@@ -1,6 +1,7 @@
 //os recursos são acionados no final do carregamento da pag 
 window.onload = function () {
   renderizarSkeletons(5, ".tarefas-pendentes");
+  renderizarSkeletons(3, ".tarefas-terminadas");
   //testando se o usuário esta logado
   let semPermissao = this.sessionStorage.getItem("jwt");
   if (!semPermissao) {
@@ -63,6 +64,7 @@ window.onload = function () {
     fetch('https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/', request)
       .then(function (resultado) {
         removerSkeleton(".tarefas-pendentes");
+        removerSkeleton(".tarefas-terminadas");
         if (resultado.status == 200 || resultado.status == 201) {
           return resultado.json();
         }
@@ -76,6 +78,7 @@ window.onload = function () {
       })
       .then(function (data) {
         removerSkeleton(".tarefas-pendentes");
+        removerSkeleton(".tarefas-terminadas");
         //manipulamos a resposta 
         data.forEach((tarefas) => {
           const criaLi = document.createElement("li");
