@@ -7,14 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do App</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
 
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
   <link rel="stylesheet" href="styles/acesso.css">
+  <link rel="stylesheet" href="styles/loaders.css">
 
   <!-- ---------------------- lógica aplicada no login ----------------------- -->
   <script src="./scripts/utils.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/loaders.js"></script>
+
+   <!-- ----------------------------- sweet alert ----------------------------- -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -38,7 +43,7 @@
         <input id="inputPassword" type="password">
       </label>
 
-      <button type="submit" id="login">Acessar</button>
+      <button id="botaoAcessar" type="submit">Acessar</button>
 
     </form>
     <div class="ingressar">

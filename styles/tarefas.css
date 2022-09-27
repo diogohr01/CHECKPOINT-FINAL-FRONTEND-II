@@ -120,6 +120,25 @@ a {
   margin: 2em 15%;
 }
 
+.tarefas-pendentes button {
+  height: 2em;
+  width: 2em;
+  background-color: transparent;
+  margin-left: 0.5em;
+  margin-right: 1em;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.tarefas-pendentes button:hover {
+  opacity: 1;
+}
+
+.tarefas-pendentes button img {
+  height: 100%;
+  width: 100%;
+}
+
 .tarefa {
   display: flex;
   align-items: center;
@@ -211,8 +230,24 @@ a {
   color: grey;
   background-color: rgb(228, 228, 228);
 }
-.tarefas-terminadas button{
-  margin-left: 10px;
+
+.tarefas-terminadas button {
+  height: 2em;
+  width: 2em;
+  background-color: transparent;
+  margin-left: 0.5em;
+  margin-right: 1em;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.tarefas-terminadas button:hover {
+  opacity: 1;
+}
+
+.tarefas-terminadas button img {
+  height: 100%;
+  width: 100%;
 }
 
 .tarefas-terminadas .tarefa .descricao {
