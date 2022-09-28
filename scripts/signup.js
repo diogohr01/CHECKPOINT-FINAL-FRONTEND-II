@@ -1,12 +1,13 @@
 window.onload = function () {
-    let l = false;
-   let f = false;
-   let g = false;
-   let imagemchave = document.getElementById("imagemb")
-  document.getElementById("criar").style.backgroundColor = "gray"
- 
+    function InserirImagem(url) {
+        let img = document.createElement("img");
+        img.src=url;
+        }
+    
     let botao = document.getElementById("criar");
-
+   botao.style.backgroundColor = "gray"
+   let imagemchave = document.getElementById("imagemb")
+   document
     botao.addEventListener("click", function (event) {
         event.preventDefault();
         cadastrar();
@@ -41,8 +42,7 @@ window.onload = function () {
             },
             body: dados
         }
-        if (l != false && f != false && g != false && nomeDigitado != "" && sobrenomeDigitado != "" && emailDigitado != "" && senhaDigitada != "" && confimaSenhadigitada != "") {
-            
+        if (nomeDigitado != "" && sobrenomeDigitado != "" && emailDigitado != "" && senhaDigitada != "" && confimaSenhadigitada != "") {
             mostrarSpinner();
             if (senhaDigitada != confimaSenhadigitada) {
                 sweetalert2('error', 'Senhas não conferem', "./signup.html")
@@ -101,16 +101,16 @@ window.onload = function () {
         }
     });
     //Dizer se o email é invalido
-    document.getElementById("email").addEventListener('keyup', (event)=> {
+     document.getElementById("email").addEventListener('keyup', (event)=> {
      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById("email").value)){
      event.target.style.background = "green"
-     document.getElementById("criar").removeAttribute("disabled")
-     l = true;
+     
      
      }else{
         event.target.style.background = "pink"
         document.getElementById("avisoEmail").innerHTML = `Email inválido`
-        document.getElementById("criar").setAttribute("disabled", "true")
+        
+        
      }});
     document.getElementById("senha").addEventListener('blur', function () {
         if (document.getElementById("senha").value === '') {
@@ -130,7 +130,7 @@ window.onload = function () {
             document.getElementById("avisoConfirmaSenha").innerHTML = ``
         }});
     //avisa que precisa de mais caracteres na senha
-    document.getElementById("senha").addEventListener('focus', (event) => {
+     document.getElementById("senha").addEventListener('focus', (event) => {
         event.target.style.background = '';
       }, true);
       document.getElementById("senha").addEventListener('keyup', (event) => {
@@ -138,24 +138,19 @@ window.onload = function () {
        event.target.style.background = 'green';
        document.getElementById("avisoSenha").innerHTML = ``
        document.getElementById("criar").removeAttribute("disabled")
-       f = true;
-       if(l != false){
-        document.getElementById("criar").style.backgroundColor = "blue"
-        document.getElementById("criar").removeChild(imagemchave)
-        document.getElementById("criar").innerHTML = "Criar conta"
-       }
-    }
+       document.getElementById("criar").removeChild(imagemchave)
+       document.getElementById("criar").innerHTML = `Criar conta`
+       botao.style.backgroundColor = "blue"
        
-       else{
+      }else{
         event.target.style.background = 'pink';
        document.getElementById("avisoSenha").innerHTML = `O campo deve possuir uma senha com 8 caracteres`
        document.getElementById("avisoSenha").style.color = "red"
        document.getElementById("criar").setAttribute("disabled", "true")
-       }
-      }, true);
-    
-    
-
+       botao.style.backgroundColor = "gray"
+       
+        }
+       }, true);
     }
     
     
